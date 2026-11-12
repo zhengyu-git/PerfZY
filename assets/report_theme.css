@@ -1,0 +1,111 @@
+/* Shared offline report surfaces, matching PerfZY's desktop appearance. */
+:root{
+  color-scheme:light;--chrome:#e9edf2;--sidebar:#f2f4f7;--page:#fafbfc;--paper:#fff;
+  --control:#fff;--soft:#f5f6f9;--soft2:#eef0f5;--hover:#e9edf3;--selected:#eef1fa;
+  --line:#e0e4eb;--line2:#eceef3;--text:#2b303c;--muted:#6d7585;
+  --blue:#6576bd;--blue2:#596bb2;--primary:#596bb2;--green:#3b8b6b;--danger:#b95e67;
+  --warning:#996014;--warning-soft:#faf5ed;--chart:#fff;--grid:#edf0f4;--axis:#b7bfcd;
+  --shadow:none;--shadow-lg:0 12px 36px #2732471a;--ring:0 0 0 3px #5b75c81a;
+  --radius:12px;--radius-sm:8px;--font:"Segoe UI Variable","Segoe UI","Microsoft YaHei UI","PingFang SC",sans-serif;
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;--chrome:#31323b;--sidebar:#2c2d35;--page:#26272e;--paper:#2c2e37;
+  --control:#333640;--soft:#30323b;--soft2:#343640;--hover:#3b3e49;--selected:#373e55;
+  --line:#40434f;--line2:#373a45;--text:#e6e8ef;--muted:#a9afbd;
+  --blue:#9aa9ec;--blue2:#9aa9ec;--primary:#677bc4;--green:#79ce9c;--danger:#ed8991;
+  --warning:#e4b77d;--warning-soft:#36312c;--chart:#2c2e37;--grid:#393c47;--axis:#757e90;
+  --shadow-lg:0 14px 40px #0005;--ring:0 0 0 3px #8c9dfc20;
+}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:128px}
+body{font-family:var(--font);font-variant-numeric:tabular-nums;-webkit-font-smoothing:antialiased}
+button,input,select,textarea{font-family:inherit}button{cursor:pointer}button:disabled{cursor:default}
+:focus-visible{outline:2px solid var(--blue);outline-offset:3px}::selection{background:var(--selected)}
+::-webkit-scrollbar{width:8px;height:8px}::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--axis);border:2px solid var(--page);border-radius:6px}
+[data-report-theme-toggle]{display:inline-flex!important;align-items:center;justify-content:center;gap:7px;min-height:34px}
+[data-report-theme-toggle] svg{width:16px;height:16px;flex-shrink:0}
+.report-document,.report-comparison{margin:0;background:var(--chrome);color:var(--text);font:14px/1.65 var(--font);padding:18px}
+.report-document .report-top,.report-comparison .report-top{
+  max-width:1400px;margin:auto;display:flex;align-items:center;gap:12px;min-height:58px;padding:12px 22px;
+  background:var(--sidebar);color:var(--text);border:1px solid var(--line);border-bottom:0;border-radius:16px 16px 0 0;
+  box-shadow:none;position:static;
+}
+.report-document .report-brand,.report-comparison .report-brand{font-size:16px;font-weight:650;font-style:normal;letter-spacing:0;color:var(--text)}
+.report-document .report-kind,.report-comparison .report-kind{font-size:12px;letter-spacing:0;color:var(--muted)}
+.report-document .report-actions,.report-comparison .report-actions{margin-left:auto;display:flex;align-items:center;gap:8px}
+.report-document .report-actions button,.report-comparison .report-actions button,.report-comparison .report-actions a{
+  display:inline-flex;align-items:center;justify-content:center;gap:7px;min-height:34px;margin:0;padding:6px 12px;
+  font:12px var(--font);background:var(--control);border:1px solid var(--line);border-radius:8px;color:var(--text);text-decoration:none;white-space:nowrap;
+}
+.report-document .report-actions button:hover,.report-comparison .report-actions button:hover,.report-comparison .report-actions a:hover{background:var(--hover)}
+.report-document .report-shell,.report-comparison main{
+  max-width:1400px;margin:auto;padding:26px;background:var(--page);border:1px solid var(--line);border-top:0;border-radius:0 0 16px 16px;
+}
+.report-document .report-hero,.report-document .report-section,.report-comparison article,.report-comparison section{
+  color:var(--text);background:var(--paper);border:1px solid var(--line);border-radius:12px;box-shadow:none;padding:22px;margin:0 0 16px;
+}
+.report-document .report-hero::before,.report-document .report-hero::after{display:none}
+.report-document h1,.report-comparison h1{font-size:25px;font-weight:650;line-height:1.4;letter-spacing:0;margin:0 0 12px;color:var(--text);overflow-wrap:anywhere}
+.report-document h2,.report-comparison h2{font-size:17px;font-weight:650;margin:0 0 12px;color:var(--text)}
+.report-document h3,.report-comparison h3{font-size:14px;color:var(--text)}
+.report-document p,.report-comparison p{overflow-wrap:anywhere}
+.report-document .hero-row{display:flex;align-items:center;gap:24px;justify-content:space-between}
+.report-document .hero-copy{min-width:0;flex:1}.report-document .hero-kicker{display:none}
+.report-document .hero-scope,.report-document .section-intro,.report-document .kpi-note,.report-document .report-footer,.report-comparison small{font-size:12px;color:var(--muted)}
+.report-document .hero-meta{margin-top:18px;padding-top:16px;border-top:1px solid var(--line2);display:flex;flex-wrap:wrap;gap:8px 22px;color:var(--muted);font-size:12px;background:none}
+.report-document .status-card{width:auto;min-width:180px;max-width:260px;background:var(--soft);border:1px solid var(--line);border-radius:10px;color:var(--text);box-shadow:none;padding:14px 18px}
+.report-document .status-card small,.report-document .status-card span{font-size:11px;color:var(--muted)}
+.report-document .status-card b{font-size:18px;color:var(--text);margin:5px 0}
+.report-document .kpis{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;border:0;background:none;padding:0}
+.report-document .kpi,.report-document .evidence-card,.report-document .risk-card,.report-document .finding-card{
+  background:var(--soft);border:1px solid var(--line);border-radius:10px;box-shadow:none;color:var(--text);padding:16px;
+}
+.report-document .kpi-name{font-size:12px;color:var(--muted)}.report-document .kpi-value{font-size:26px;color:var(--text);font-weight:650}
+.report-document .summary-lead,.report-document .summary-list,.report-document .evidence-head p{color:var(--text);line-height:1.8}
+.report-document .table-wrap,.report-document .trend-card,.report-document .screenshot-card{background:var(--paper);border:1px solid var(--line);border-radius:8px;overflow:auto}
+.report-document table,.report-comparison table{width:100%;border-collapse:collapse;font-size:12px;background:var(--paper);color:var(--text)}
+.report-document th,.report-comparison th{background:var(--soft);font-weight:550;color:var(--muted)}
+.report-document th,.report-document td,.report-comparison th,.report-comparison td{padding:11px 13px;border-bottom:1px solid var(--line2);text-align:right;white-space:nowrap}
+.report-document th:first-child,.report-document td:first-child,.report-comparison th:first-child,.report-comparison td:first-child{text-align:left}
+.report-document td small,.report-comparison small{display:block;color:var(--muted);font-size:11px}
+.report-document tr:hover td,.report-comparison tr:hover td{background:var(--soft)}
+.report-document .unassessed{background:var(--soft);border-color:var(--line);color:var(--muted)}
+.report-document .metric-badge{background:var(--selected);color:var(--blue);border-color:var(--line)}
+.report-document .report-section>h2::before{background:var(--blue)}
+.report-document .trend-svg text,.report-document .scene-bar-svg text{fill:var(--muted)}
+.report-document .trend-svg .grid{stroke:var(--grid)}.report-document .trend-svg .vgrid{stroke:var(--grid)}
+.report-document .trend-svg .divider{stroke:var(--axis)}
+.report-document .trend-svg,.report-document .scene-bar-svg{background:var(--paper);border-color:var(--line);border-radius:8px}
+.report-document .risk,.report-document .risk.clear{background:var(--soft);border-color:var(--line);border-radius:8px;color:var(--text)}
+.report-document .risk.high,.report-document .risk.medium{background:var(--warning-soft);border-color:var(--line)}
+.report-document .risk p,.report-document .method-card p,.report-document .evidence-note,.report-document .report-foot,.report-document .no-chart{color:var(--muted)}
+.report-document .risk>span{background:var(--soft2);color:var(--warning);border-radius:6px}
+.report-document .shot-grid figure{border-color:var(--line);background:var(--paper);border-radius:8px;overflow:hidden}
+.report-document .shot-grid figcaption{background:var(--soft);color:var(--muted)}
+.report-document .capture-quality-content{background:var(--paper);color:var(--text);border-color:var(--line)}
+.report-document .capture-quality-content p,.report-document .capture-quality-content th{color:var(--muted)}
+.report-comparison .cards{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.report-comparison article{min-width:0}.report-comparison article p{margin:8px 0;font-size:13px}
+.report-comparison .comparison-quality{margin-top:16px;padding-top:12px;border-top:1px solid var(--line2);font-size:12px;color:var(--muted)}
+.report-comparison .comparison-quality summary{cursor:pointer;line-height:1.8}.report-comparison .comparison-quality summary span{float:right;font-size:11px;color:var(--muted)}
+.report-comparison .comparison-quality p{font-size:11px;line-height:1.9;color:var(--muted);margin:12px 0 0}
+.report-comparison .report-heading{padding:2px 2px 18px}.report-comparison .report-heading p{color:var(--muted);font-size:13px;margin:0}
+.report-comparison .notice{background:var(--warning-soft);border-color:var(--line)}
+.report-comparison .notice li{color:var(--muted);font-size:13px;margin:6px 0}
+.report-comparison .download-button{display:inline-flex;align-items:center;min-height:34px;padding:7px 14px;margin:0 0 16px;border:1px solid var(--primary);border-radius:8px;background:var(--primary);color:white;text-decoration:none;font-size:12px}
+.report-comparison .download-button:hover{filter:brightness(1.08)}
+.report-comparison .scroll{overflow:auto;max-width:100%}.report-comparison section{overflow:hidden}
+@media(max-width:800px){
+  .report-document,.report-comparison{padding:10px}.report-document .report-shell,.report-comparison main{padding:16px}
+  .report-document .report-top,.report-comparison .report-top{padding:12px 16px}.report-document .report-kind,.report-comparison .report-kind{display:none}
+  .report-document .hero-row{flex-wrap:wrap}.report-document .status-card{max-width:none;min-width:0;width:100%}
+  .report-document .kpis,.report-comparison .cards{grid-template-columns:1fr 1fr}
+}
+@media(max-width:520px){.report-document .kpis,.report-comparison .cards{grid-template-columns:1fr}.report-document .report-section,.report-comparison section{padding:16px}}
+@media print{
+  :root,:root[data-theme="dark"]{color-scheme:light;--chrome:#fff;--sidebar:#f1f4f8;--page:#fff;--paper:#fff;--control:#fff;--soft:#f1f4f8;--soft2:#eaf0f6;--line:#e0e4eb;--line2:#eceef3;--text:#2b303c;--muted:#6d7585;--blue:#6576bd;--blue2:#596bb2;--primary:#596bb2;--warning:#996014;--warning-soft:#faf5ed;--chart:#fff;--grid:#edf1f6;--axis:#b6c1cf}
+  html{scroll-behavior:auto}.report-document,.report-comparison{padding:0;background:white}
+  .report-document .report-actions,.report-comparison .report-actions{display:none}
+  .report-document .report-shell,.report-comparison main{padding:0;border:0}.report-document .report-top,.report-comparison .report-top{padding:0 0 14px;border:0;background:white}
+  .report-document .report-section,.report-comparison section{break-inside:avoid}.report-document .report-hero{break-after:avoid}
+}
