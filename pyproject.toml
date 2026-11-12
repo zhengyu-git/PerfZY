@@ -1,0 +1,35 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "perfzy-local"
+version = "0.3.0"
+description = "PerfZY local real-device performance collection SDK"
+readme = "README.md"
+requires-python = ">=3.11"
+license = {text = "GPL-3.0-or-later"}
+classifiers = ["Operating System :: Microsoft :: Windows", "Programming Language :: Python :: 3"]
+dependencies = [
+    "psutil>=6,<8",
+    "Pillow>=11,<13",
+    "protobuf>=6,<8",
+    "grpcio>=1.70,<2",
+    "pymobiledevice3>=10.3,<11",
+    "cryptography>=43,<51",
+]
+
+[project.optional-dependencies]
+# The QML workspace is only needed to run the desktop app; the automation API
+# in perfzy.automation works without Qt.
+gui = ["PySide6>=6.8,<7"]
+dev = ["pytest>=8"]
+
+[tool.setuptools.packages.find]
+include = ["perfzy*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests/unit"]
+# tools/ and vendor/ hold bundled third-party runtimes that ship their own test
+# suites; collecting them would run thousands of unrelated tests.
+norecursedirs = ["tools", "vendor", "PerfZY-Portable", "data", "exports", "tmp"]

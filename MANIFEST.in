@@ -1,0 +1,10 @@
+include setup.py setup.cfg README.md LICENSE
+include docs/PythonSDK使用说明.md docs/自定义上传接口.md
+recursive-include examples *.py
+include assets/report_template_v10.html assets/report_workbench.css
+include assets/report_workbench.js assets/perfzy-icon-rounded.png
+include assets/perfzy-icon-rounded.ico assets/perfzy-logo-source.png
+include assets/perfzy-icon-rounded-v2.ico
+include tools/ios_bridge.py tools/PresentMon-LICENSE.txt tools/NOTICE.txt
+
+include assets/report_theme.css assets/report_theme.js
