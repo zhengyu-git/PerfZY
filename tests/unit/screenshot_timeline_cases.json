@@ -1,0 +1,14 @@
+[
+  {"name":"normal nearest frame","shots":[2,4,6],"time":3.4,"settings":{"screenshots":true,"screenshot_interval_ms":2000},"expected":1},
+  {"name":"closed period beats nearby last frame","shots":[2,4,6],"time":6.1,"settings":{"screenshots":true,"screenshot_interval_ms":2000},"changes":[{"elapsed":6.05,"settings":{"screenshots":false}}],"expected":-1,"reason":"disabled"},
+  {"name":"no jumping forward across closed period","shots":[2,4,20,22],"time":15,"settings":{"screenshots":true,"screenshot_interval_ms":2000},"changes":[{"elapsed":5,"settings":{"screenshots":false}},{"elapsed":20,"settings":{"screenshots":true}}],"expected":-1,"reason":"disabled"},
+  {"name":"re-enabled before new frame has no old image","shots":[2,4],"time":20.1,"settings":{"screenshots":true,"screenshot_interval_ms":2000},"changes":[{"elapsed":5,"settings":{"screenshots":false}},{"elapsed":20,"settings":{"screenshots":true}}],"expected":-1},
+  {"name":"after re-enable matches new run","shots":[2,4,22,24],"time":23,"settings":{"screenshots":true,"screenshot_interval_ms":2000},"changes":[{"elapsed":5,"settings":{"screenshots":false}},{"elapsed":20,"settings":{"screenshots":true}}],"expected":2},
+  {"name":"large failure gap","shots":[2,4,32,34],"time":18,"settings":{"screenshots":true,"screenshot_interval_ms":2000},"expected":-1},
+  {"name":"after last frame must not hold forever","shots":[2,4,6],"time":40,"settings":{"screenshots":true,"screenshot_interval_ms":2000},"expected":-1},
+  {"name":"initially disabled","shots":[],"time":1,"settings":{"screenshots":false},"expected":-1,"reason":"disabled"},
+  {"name":"initially disabled then enabled","shots":[22,24],"time":23,"settings":{"screenshots":false,"screenshot_interval_ms":2000},"changes":[{"elapsed":20,"settings":{"screenshots":true}}],"expected":0},
+  {"name":"interval change stays in same run","shots":[2,4,14],"time":9,"settings":{"screenshots":true,"screenshot_interval_ms":2000},"changes":[{"elapsed":4,"settings":{"screenshots":true,"screenshot_interval_ms":10000}}],"expected":1},
+  {"name":"legacy cadence","shots":[2,5,8],"time":6.8,"settings":{},"expected":2},
+  {"name":"legacy long tail still missing","shots":[2,5,8],"time":40,"settings":{},"expected":-1}
+]

@@ -1,0 +1,35 @@
+const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict');
+const source=fs.readFileSync(path.join(__dirname,'../../assets/report_template_v10.html'),'utf8');
+function functionText(name){
+  const start=source.indexOf('function '+name+'(');assert.ok(start>=0,name);
+  const end=source.indexOf('\nfunction ',start+9);return source.slice(start,end<0?source.length:end);
+}
+const R={measurement:{platform:'windows'},metrics:{fps:{title:'FPS',unit:'FPS'},frame_time:{title:'Frame Time',unit:'ms'},jank_rate:{title:'Jank',unit:'%'}}};
+const reportStats=key=>({avg:key==='fps'?60:key==='frame_time'?16:0,p5:60,p95:key==='frame_time'?16:0});
+const evaluate=new Function('R','reportStats',functionText('professionalReferenceEvaluation')+';return professionalReferenceEvaluation;')(R,reportStats);
+const scope={rows:[]},keys=Object.keys(R.metrics);
+assert.equal(evaluate(scope,keys,60).status,'incomplete','legacy data cannot prove complete coverage');
+R.quality={samples:10,metrics:Object.fromEntries(keys.map(key=>[key,{requested:10,valid:10,valid_percent:100,coverage_estimate_percent:100}]))};
+assert.equal(evaluate(scope,keys,60).status,'pass');
+R.quality.metrics.fps.coverage_estimate_percent=null;
+assert.equal(evaluate(scope,keys,60).status,'incomplete','unknown time coverage cannot pass');
+R.quality.metrics.fps.coverage_estimate_percent=89;
+assert.equal(evaluate(scope,keys,60).status,'incomplete');
+R.quality.metrics.fps.coverage_estimate_percent=100;R.quality.metrics.frame_time.suspicious_long=1;
+assert.equal(evaluate(scope,keys,60).status,'incomplete');
+R.quality.metrics.frame_time.suspicious_long=0;
+const esc=value=>String(value??'').replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;');
+R.capture_settings={build_label:'build <one>',conditions:'High / 60 FPS',sample_interval_ms:1000,screenshots:false};
+R.capture_settings_changes=[{elapsed:2,settings:{sample_interval_ms:2000}}];
+R.quality.metrics.fps.held=3;R.quality.metrics.fps.adjusted=2;
+const table=new Function('R','esc','fmtTime',functionText('qualityTableForExport')+';return qualityTableForExport;')(R,esc,String)();
+assert.ok(table.includes('build &lt;one&gt;'));assert.ok(!table.includes('build <one>'));
+assert.ok(table.includes('audit.jsonl'));assert.ok(table.includes('不代表当前所选场景'));assert.ok(table.includes('缓存沿用'));
+assert.ok(table.includes('2000'));
+const stats={count:10,avg:60,min:60,p5:60,p50:60,p95:60,max:60,stdev:0,cv:0,first:60,last:60};
+const model={schemaVersion:'2.0',title:'quality',baseName:'quality',generatedAt:'now',source:{samples:10},device:{},scope:{label:'selected',duration:2,ranges:[{start:1,end:3}]},scopeStart:1,scopeEnd:3,metricKeys:['fps'],metrics:{fps:{title:'FPS',unit:'FPS',stats}},scenes:[{name:'scene',start:1,end:3,duration:2,samples:2,metricStats:{fps:stats}}],evaluation:{label:'参考通过',gates:[]},alerts:[],evidencePoints:[],recommendations:[],sampleInterval:1};
+const jsonFn=new Function('R','professionalReportReferences','iosMeasurementWarning',functionText('cleanReportStats')+'\n'+functionText('buildProfessionalJsonReport')+';return buildProfessionalJsonReport;')(R,[],()=>''),data=JSON.parse(jsonFn(model).content);
+assert.equal(data.capture_quality.metrics.fps.held,3);assert.equal(data.capture_settings.build_label,'build <one>');assert.equal(data.capture_settings_changes.length,1);assert.equal(data.capture_quality_scope,'whole-session');
+const csvFn=new Function('R','csvQuote','mdResult',functionText('buildProfessionalCsvReport')+';return buildProfessionalCsvReport;')(R,value=>'"'+String(value??'').replaceAll('"','""')+'"',String),csv=csvFn(model).content;
+assert.ok(csv.includes('quality_coverage_estimate_pct'));assert.equal((csv.match(/whole-session/g)||[]).length,2);
+console.log('Capture quality report passed: legacy unknowns, coverage gate, held/audit traceability and JSON/CSV scope.');
